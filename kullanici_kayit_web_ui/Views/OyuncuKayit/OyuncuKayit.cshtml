@@ -1,0 +1,738 @@
+﻿@model kullanici_kayit_web_ui.Models.OyuncuKayit.OyuncuKayitEkle
+@{
+	ViewData["Title"] = "OyuncuKayit";
+}
+
+@*
+	Yapılacaklar
+	lig adı ve iller de ki seçiniz gönderme sorunu(bunları doldurmama ihtimali var ama eğer doldurusada seçiniz kalmaması lazım bu düzeltilecek)(yapıldı)
+	"Adınız","Soyadınız" alanlarının sadece harf kabul etmesi(yapıldı)
+	Telefon numaranız alanının sadece sayı kabul etmesi(yapıldı)
+	Doğum yılınız alanının 4 hane kabul etmesi ve minumum 1000 maksimum 2999 değerlerini kabul etmesi (yapıldı)
+
+	"Ödeme Yapan veya yapacak kişinin Adı" alanının sadece harf kabul etmesi(yapıldı)
+
+
+	tarih alanının kısa tarihe çevirilmesi (yapıldı)
+*@
+
+
+
+@{
+	//ilerki zamanlarda bu dropdownda verileri backend den de alabiliriz.yada appsettings.json dosyasından
+	// dropdown elementleri için liste ve sözlük tanımlamaları
+	List<string> ulkeler = new List<string>()
+	{
+		// "Seçiniz",
+		"Türkiye",
+		"Avusturya",
+		"Afganistan",
+		"Antigua ve Barbuda",
+		"Arnavutluk",
+		"Andorra",
+		"Angola",
+		"Antarktika",
+		"Ermenistan",
+		"Aruba",
+		"Avustralya",
+		"Åland",
+		"Anguilla",
+		"Azerbaycan",
+		"Belçika",
+		"Bangladeş",
+		"Barbados",
+		"Burkina Faso",
+		"Bulgaristan",
+		"Butan",
+		"Bosna-Hersek",
+		"Bolivya",
+		"Brezilya",
+		"Bahreyn",
+		"Brunei",
+		"Bahama",
+		"Burundi",
+		"Beyaz Rusya",
+		"Belize",
+		"Küba",
+		"Kamerun",
+		"Kanada",
+		"Demokratik Kongo Cumhuriyeti",
+		"İsviçre",
+		"Fildişi Sahili",
+		"Sri Lanka",
+		"Çin Halk Cumhuriyeti",
+		"Kolombiya",
+		"Komor",
+		"Kosta Rika",
+		"Cape Verde",
+		"Kıbrıs Cumhuriyeti",
+		"Galler",
+		"Çek Cumhuriyeti",
+		"Almanya",
+		"Cibuti",
+		"Danimarka",
+		"Dominik Cumhuriyeti",
+		"Benin",
+		"Cezayir",
+		"İspanya",
+		"Kenya",
+		"Tanzanya",
+		"Uganda",
+		"Ekvador",
+		"İngiltere",
+		"Eritre",
+		"El Salvador",
+		"Estonya",
+		"Mısır",
+		"Etiyopya",
+		"Fransa",
+		"Finlandiya",
+		"Fiji",
+		"Lihtenştayn",
+		"Faroe Adaları",
+		"Mikronezya",
+		"Gabon",
+		"Birleşik Krallık (Büyük Britanya ve Kuzey İrlanda)",
+		"Alderney",
+		"Guernsey",
+		"Jersey",
+		"Man Adası",
+		"Cebelitarık",
+		"Guatamala",
+		"Gürcistan",
+		"Gana",
+		"RGB",
+		"Gine Bissau",
+		"Ekvator Ginesi",
+		"Yunanistan",
+		"Guyana",
+		"Macaristan",
+		"Hong Kong",
+		"Ürdün",
+		"Honduras",
+		"Hırvatistan",
+		"İtalya",
+		"İsrail",
+		"Hindistan",
+		"İran",
+		"İrlanda",
+		"Irak",
+		"İzlanda",
+		"Japonya",
+		"Jamaika",
+		"Kamboçya",
+		"Saint Kitts ve Nevis",
+		"Grönland",
+		"Kırgızistan",
+		"Kiribati",
+		"Kuzey Kore",
+		"Suudi Arabistan",
+		"Kuveyt",
+		"Kazakistan",
+		"Lüksemburg",
+		"Laos",
+		"Libya",
+		"Liberya",
+		"Lesoto",
+		"Litvanya",
+		"Letonya",
+		"Malta",
+		"Fas",
+		"Malezya",
+		"Monako",
+		"Moldova",
+		"Meksika",
+		"Moğolistan",
+		"Marshall Adaları",
+		"Makedonya",
+		"Karadağ",
+		"Makao",
+		"Mozambik",
+		"Mauritius",
+		"Maldivler",
+		"Malavi",
+		"Myanmar",
+		"Norveç",
+		"Hollanda Antilleri",
+		"Namibya",
+		"Nauru",
+		"Yeni Kaledonya",
+		"Nepal",
+		"Nikaragua",
+		"Kuzey İrlanda",
+		"Hollanda",
+		"Yeni Zelanda",
+		"Umman",
+		"Portekiz",
+		"Panama",
+		"Pakistan",
+		"Palau",
+		"Peru",
+		"Polonya",
+		"Transdinyester",
+		"Papua Yeni Gine",
+		"Porto Riko",
+		"Filistin",
+		"Paraguay",
+		"Katar",
+		"Arjantin",
+		"Botsvana",
+		"Çin Cumhuriyeti (Tayvan)",
+		"Orta Afrika Cumhuriyeti",
+		"Kongo Cumhuriyeti",
+		"Şili",
+		"Gine",
+		"Haiti",
+		"Endonezya",
+		"Moritanya",
+		"Kosova",
+		"Lübnan",
+		"Madagaskar",
+		"Mali",
+		"Nijer",
+		"Romanya",
+		"Güney Kore",
+		"Uruguay",
+		"Filipinler",
+		"San Marino",
+		"Togo",
+		"Rusya",
+		"Ruanda",
+		"İsveç",
+		"Suudi Arabistan",
+		"İskoçya",
+		"Svaziland",
+		"Singapur",
+		"Slovakya",
+		"Sierra Leone",
+		"Slovenya",
+		"Surinam",
+		"Malta Askeri Hükümdarlığı",
+		"Senegal",
+		"Somali",
+		"Solomon Adaları",
+		"Sırbistan",
+		"Sao Tome ve Principe",
+		"Sudan",
+		"Seyşeller",
+		"Suriye",
+		"Tayland",
+		"Çad",
+		"Togo",
+		"Tacikistan",
+		"Doğu Timor",
+		"Türkmenistan",
+		"Tunus",
+		"Tonga",
+		"Togo",
+		"Tuvalu",
+		"Ukrayna",
+		"Birleşik Arap Emirlikleri",
+		"Amerika Birleşik Devletleri",
+		"Özbekistan",
+		"Vatikan",
+		"Vietnam",
+		"Vanuatu",
+		"Gambiya",
+		"Sierra Leone",
+		"Nijerya",
+		"Dominika",
+		"Grenada",
+		"Saint Lucia",
+		"Samoa",
+		"Batı Sahra",
+		"Saint Vincent ve Grenadines",
+		"Yemen",
+		"Venezuela",
+		"Zambiya",
+		"Güney Afrika Cumhuriyeti",
+		"Zimbabve"
+	};
+	List<string> iller = new List<string>()
+	{
+		// "Seçiniz",
+		"İSTANBUL",
+		"ANKARA",
+		"İZMİR",
+		"ADANA",
+		"ADIYAMAN",
+		"AFYONKARAHİSAR",
+		"AĞRI",
+		"AMASYA",
+		"ANTALYA",
+		"ARTVİN",
+		"AYDIN",
+		"BALIKESİR",
+		"BİLECİK",
+		"BİNGÖL",
+		"BİTLİS",
+		"BOLU",
+		"BURDUR",
+		"BURSA",
+		"ÇANAKKALE",
+		"ÇANKIRI",
+		"ÇORUM",
+		"DENİZLİ",
+		"DİYARBAKIR",
+		"EDİRNE",
+		"ELAZIĞ",
+		"ERZİNCAN",
+		"ERZURUM",
+		"ESKİŞEHİR",
+		"GAZİANTEP",
+		"GİRESUN",
+		"GÜMÜŞHANE",
+		"HAKKARİ",
+		"HATAY",
+		"ISPARTA",
+		"MERSİN(İÇEL)",
+		"KARS",
+		"KASTAMONU",
+		"KAYSERİ",
+		"KIRKLARELİ",
+		"KIRŞEHİR",
+		"KOCAELİ",
+		"KONYA",
+		"KÜTAHYA",
+		"MALATYA",
+		"MANİSA",
+		"KAHRAMANMARAŞ",
+		"MARDİN",
+		"MUĞLA",
+		"MUŞ",
+		"NEVŞEHİR",
+		"NİĞDE",
+		"ORDU",
+		"RİZE",
+		"SAKARYA",
+		"SAMSUN",
+		"SİİRT",
+		"SİNOP",
+		"SİVAS",
+		"TEKİRDAĞ",
+		"TOKAT",
+		"TRABZON",
+		"TUNCELİ",
+		"ŞANLIURFA",
+		"UŞAK",
+		"VAN",
+		"YOZGAT",
+		"ZONGULDAK",
+		"AKSARAY",
+		"BAYBURT",
+		"KARAMAN",
+		"KIRIKKALE",
+		"BATMAN",
+		"ŞIRNAK",
+		"BARTIN",
+		"ARDAHAN",
+		"IĞDIR",
+		"YALOVA",
+		"KARABÜK",
+		"KİLİS",
+		"OSMANİYE",
+		"DÜZCE"
+	};
+	List<string> cinsiyetler = new List<string>()
+	{
+		// "Seçiniz",
+		"ERKEK",
+		"KADIN",
+		"BELİRTMEK İSTEMİYORUM",
+	};
+	List<string> bedenOlcüleri = new List<string>()
+	{
+		// "Seçiniz",
+		"XS",
+		"S",
+		"M",
+		"L",
+		"XL",
+		"XXL",
+		"XXXL",
+		"4XL",
+		"5XL",
+		"6XL",
+	};
+
+	List<string> ligAdlari = new List<string>()
+	{
+		// "Seçiniz",
+		"Süper Lig",
+		"Birinci Lig",
+		"İkinci Lig",
+		"Üçüncü Lig",
+	};
+
+	Dictionary<int, string> oyunSeviyeleri = new Dictionary<int, string>()
+	{
+		{1,"Başlangıç"},
+		{2,"Zayıf"},
+		{3,"Orta"},
+		{4,"İyi"},
+		{5,"Çok İyi"},
+
+	};
+
+	Dictionary<bool, string> tercihSorulari = new Dictionary<bool, string>()
+	{
+		{true,"Evet"},
+		{false,"Hayır"},
+	};
+
+}
+
+
+<h1>OyuncuKayit</h1>
+
+<h4>OyuncuKayitEkle</h4>
+<hr />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="OyuncuKayit" id="formElement">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Adi" class="control-label"></label>
+				<input asp-for="Adi" class="form-control" />
+				<span asp-validation-for="Adi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Soyadi" class="control-label"></label>
+				<input asp-for="Soyadi" class="form-control" />
+				<span asp-validation-for="Soyadi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Ulke" class="control-label"></label>
+				<select id="ulke" asp-for="Ulke" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (string ulkeismi in ulkeler)
+					{
+						<option value="@ulkeismi">@ulkeismi</option>
+					}
+				</select>
+				<span asp-validation-for="Ulke" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				@* eğer ülke türkiye ise il seçebilsin *@
+				<label asp-for="Il" id="illabel" class="control-label"></label>
+				<select id="ilsecim" asp-for="Il" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (string ilismi in iller)
+					{
+						<option value="@ilismi">@ilismi</option>
+					}
+				</select>
+				<span asp-validation-for="Il" id="ilError" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="TelefonNumarasi" class="control-label"></label>
+				<input asp-for="TelefonNumarasi" class="form-control" />
+				<span asp-validation-for="TelefonNumarasi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="EpostaAdresi" class="control-label"></label>
+				<input asp-for="EpostaAdresi" class="form-control" />
+				<span asp-validation-for="EpostaAdresi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Cinsiyet" class="control-label"></label>
+				<select asp-for="Cinsiyet" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (string cinsiyet in cinsiyetler)
+					{
+						<option value=@cinsiyet>@cinsiyet</option>
+					}
+				</select>
+				<span asp-validation-for="Cinsiyet" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="DogumYili" class="control-label"></label>
+				<input asp-for="DogumYili" class="form-control" />
+				<span asp-validation-for="DogumYili" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="BedenOlcusu" class="control-label"></label>
+				<select asp-for="BedenOlcusu" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (string bedenOlcusu in bedenOlcüleri)
+					{
+						<option value=@bedenOlcusu>@bedenOlcusu</option>
+					}
+				</select>
+				<span asp-validation-for="BedenOlcusu" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="OyunSeviye" class="control-label"></label>
+				<select asp-for="OyunSeviye" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (KeyValuePair<int, string> oyunseviye in oyunSeviyeleri)
+					{
+						<option value=@oyunseviye.Key> @oyunseviye.Value (Seviye @oyunseviye.Key) </option>
+					}
+				</select>
+				<span asp-validation-for="OyunSeviye" class="text-danger"></span>
+			</div>
+			@* yedek amaçlı yorum satırına alındı
+				<div class="form-group form-check">
+				<label class="form-check-label">
+					<input class="form-check-input" asp-for="DahaOnceKatildiMi" /> @Html.DisplayNameFor(model => model.DahaOnceKatildiMi)
+				</label>
+			</div> *@
+			<div class="form-group">
+				@* aşağıda yazan kodu birkaç yerde daha kullanıyoruz.Bu yüzden ileriki aşamalarda partial view olarak ayarlanabilir.*@
+				<label asp-for="DahaOnceKatildiMi" class="control-label"></label>
+				<select asp-for="DahaOnceKatildiMi" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (KeyValuePair<bool,string> tercih in tercihSorulari)
+					{
+						<option value=@tercih.Key> @tercih.Value , @(tercih.Key ? "Katıldım": "Katılmadım")</option>
+					}
+				</select>
+				<span asp-validation-for="DahaOnceKatildiMi" class="text-danger"></span>
+			</div>
+			@* CiftMacTercihi *@
+			<div class="form-group">
+				
+				<label asp-for="CiftMacTercihi" class="control-label"></label>
+				<select id = "cifmac" asp-for="CiftMacTercihi" class="form-control">
+					<option value="">Seçiniz</option>
+					@foreach (KeyValuePair<bool, string> tercih in tercihSorulari)
+					{
+						<option value=@tercih.Key> @tercih.Value , Çift Maç @(tercih.Key ? "İstiyorum" : "İstemiyorum")</option>
+					}
+				</select>
+				<span asp-validation-for="CiftMacTercihi" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="CiftEsAdi" id="ciftesadiLabel" class="control-label"></label>
+				<input asp-for="CiftEsAdi" id = "ciftesAdiinput" class="form-control" />
+				<span asp-validation-for="CiftEsAdi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+
+				<label asp-for="KarisikMacTercihi" class="control-label"></label>
+				<select asp-for="KarisikMacTercihi" id="karisikmac" class="form-control">
+					<option value="">Seçiniz</option>
+					@foreach (KeyValuePair<bool, string> tercih in tercihSorulari)
+					{
+						<option value=@tercih.Key> @tercih.Value , Karışık maç @(tercih.Key ? "İstiyorum" : "İstemiyorum")</option>
+					}
+				</select>
+				<span asp-validation-for="KarisikMacTercihi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="KarisikEsAdi" id="karisikesadiLabel" class="control-label"></label>
+				<input asp-for="KarisikEsAdi" id="karisikesadiinput" class="form-control" />
+				<span asp-validation-for="KarisikEsAdi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+
+				<label asp-for="UcretOdemesiYapildiMi" class="control-label"></label>
+				<select asp-for="UcretOdemesiYapildiMi" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (KeyValuePair<bool, string> tercih in tercihSorulari)
+					{
+						<option value=@tercih.Key> @tercih.Value , @(tercih.Key ? "Yapıldı" : "Yapılmadı") </option>
+					}
+				</select>
+				<span asp-validation-for="UcretOdemesiYapildiMi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="OdemeYapanKisininAdiSoyadi" class="control-label"></label>
+				<input asp-for="OdemeYapanKisininAdiSoyadi" class="form-control" />
+				<span asp-validation-for="OdemeYapanKisininAdiSoyadi" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="OdemeYapilmasiPlanlananTarih" class="control-label"></label>
+				<input asp-for="OdemeYapilmasiPlanlananTarih" class="form-control" />
+				<span asp-validation-for="OdemeYapilmasiPlanlananTarih" class="text-danger"></span>
+			</div>
+			@* UlusalLiglerdeOynadiMi *@
+			<div class="form-group">
+
+				<label asp-for="UlusalLiglerdeOynadiMi" class="control-label"></label>
+				<select asp-for="UlusalLiglerdeOynadiMi" id="ligdeoynadimi" class="form-control">
+					<option value="" selected ="selected">Seçiniz</option>
+					@foreach (KeyValuePair<bool, string> tercih in tercihSorulari)
+					{
+						<option value=@tercih.Key> @tercih.Value , @(tercih.Key ? "Oynadım" : "Oynamadım")</option>
+					}
+				</select>
+				<span asp-validation-for="UlusalLiglerdeOynadiMi" class="text-danger"></span>
+			</div>
+			<br />
+			<div class="form-group">
+				<label asp-for="LigAdi" id ="ligadiLabel" class="control-label"></label>
+				<select asp-for="LigAdi" id="ligadiinput" class="form-control">
+					<option value="" selected="selected">Seçiniz</option>
+					@foreach (string lig in ligAdlari)
+					{
+						<option value=@lig>@lig</option>
+					}
+				</select>
+				<span asp-validation-for="LigAdi"  id="ligAdiError" class="text-danger" ></span>
+			</div>
+			<br />
+			<div class="form-group">
+				<input type="submit" value="Gönder" class="btn btn-primary" />
+			</div>
+		</form>
+		<script>
+			// gizle göster işlemleri için gerekli js kodları
+			document.addEventListener("DOMContentLoaded", function () {
+				// Sayfa yüklendiğinde yapılacak işlemler buraya yazılır
+				//aşağıdakini yazma sebebimiz sayfa ilk yüklendiğinde kutuları gizliyoruz.eğer gizlemez isek kaba kuvvet ile suistimal edilebilir
+				//ili gizleme
+				document.getElementById("illabel").style.display = "none";
+				document.getElementById("ilsecim").style.display = "none";
+				//çift eş adı gizleme
+				document.getElementById("ciftesadiLabel").style.display = "none";
+				document.getElementById("ciftesAdiinput").style.display = "none";
+				//karışık eş adı gizleme
+				document.getElementById("karisikesadiLabel").style.display = "none";
+				document.getElementById("karisikesadiinput").style.display = "none";
+				//lig adı  gizleme
+				// document.getElementById("ligadiLabel").style.display = "none";
+				// document.getElementById("ligadiinput").style.display = "none";
+				
+			});
+
+			document.getElementById("ulke").addEventListener("change", function () {
+				var country = this.value;
+				var cityLabel = document.getElementById("illabel");
+				var citySelect = document.getElementById("ilsecim");
+
+				// Örneğin, Türkiye seçilmediğinde şehir seçme alanını gizle
+				if (country !== "Türkiye") {
+					cityLabel.style.display = "none";
+					citySelect.style.display = "none";
+				} else {
+					cityLabel.style.display = "block";
+					citySelect.style.display = "block";
+				}
+			});
+			
+			document.getElementById("cifmac").addEventListener("change", function () {
+				/*
+				<label asp-for="CiftEsAdi" id="ciftesadiLabel" class="control-label"></label>
+				<input asp-for="CiftEsAdi" id = "ciftesAdiinput" class="form-control" />
+				
+				*/
+				var secim = this.value;
+				var ciftesadiLabel = document.getElementById("ciftesadiLabel");
+				var ciftesadiInput = document.getElementById("ciftesAdiinput");
+				console.log("cift mac tercihi : " + secim)
+				if (secim === "False" || secim === "") {
+					ciftesadiLabel.style.display = "none";
+					ciftesadiInput.style.display = "none";
+				}
+				else {
+					ciftesadiLabel.style.display = "block";
+					ciftesadiInput.style.display = "block";
+				}
+
+
+			});
+
+			document.getElementById("karisikmac").addEventListener("change", function () {
+				/*
+				<label asp-for="KarisikEsAdi" id="karisikesadiLabel" class="control-label"></label>
+				<input asp-for="KarisikEsAdi" id="karisikesadiinput" class="form-control" />
+
+				*/
+				var secim = this.value;
+				var karisikesadiLabel = document.getElementById("karisikesadiLabel");
+				var karisikesadiInput = document.getElementById("karisikesadiinput");
+				console.log(secim)
+				if (secim === "False" || secim === "") {
+					karisikesadiLabel.style.display = "none";
+					karisikesadiInput.style.display = "none";
+				}
+				else {
+					karisikesadiLabel.style.display = "block";
+					karisikesadiInput.style.display = "block";
+				}
+
+
+			});
+
+
+
+			document.getElementById("ligdeoynadimi").addEventListener("change", function () {
+				/*
+				<label asp-for="LigAdi" id ="ligadiLabel" class="control-label"></label>
+				<select asp-for="LigAdi" id="ligadiinput" class="form-control">
+
+				*/
+				var secim = this.value;
+				var ligadiLabel = document.getElementById("ligadiLabel");
+				var ligadiInput = document.getElementById("ligadiinput");
+				console.log(typeof secim)
+				console.log(secim)
+				if (secim === "False" || secim === "") {
+					ligadiLabel.style.display = "none";
+					ligadiInput.style.display = "none";
+				}
+				else {
+					ligadiLabel.style.display = "block";
+					ligadiInput.style.display = "block";
+				}
+			});
+
+			//ülke olarak türkiye seçildiğinde il alanının boş bırakılmasını engelleme
+			//ulusal lig sorusu evet ise oynadığı lig alanın boş bırakılmasını engelleme
+
+			document.getElementById("formElement").addEventListener("submit", function (event) {
+				//ülke olarak türkiye seçildiğinde il alanının boş bırakılmasını engelleme
+
+				var ulke = document.getElementById("ulke").value;
+				var il = document.getElementById("ilsecim").value;
+				var ilErrorMessage = document.getElementById("ilError");
+
+				if (ulke == "Türkiye" && il === "") {
+					ilErrorMessage.innerText = "İl alanı gereklidir.";
+					event.preventDefault(); // Formun gönderilmesini engelle
+				} else {
+					ilErrorMessage.innerText = ""; // Hata yoksa hata mesajını temizle
+				}
+				//ulusal lig sorusu evet ise oynadığı lig alanın boş bırakılmasını engelleme
+				var ulusalligTercih = document.getElementById("ligdeoynadimi").value;
+				var ligIsmi = document.getElementById("ligadiinput").value;
+				var ligErrorMessage = document.getElementById("ligAdiError");
+				if (ulusalligTercih === "True" && ligIsmi === "") {
+					ligErrorMessage.innerText = "Lig alanı gereklidir.";
+					event.preventDefault();
+				}
+				else {
+
+					ligErrorMessage.innerText = "";
+					// document.getElementById("formElement").submit();
+				}
+
+				// var ligErrorMessage = document.getElementById("ligAdiError");
+
+				// if (ulusalligTercih === "True") {
+				// 	var ligIsmi = document.getElementById("LigAdi").value;
+
+				// 	if (ligIsmi === "") {
+				// 		ligErrorMessage.innerText = "Hangi ligde oynadığınızı belirtiniz.";
+				// 		event.preventDefault();
+				// 	} else {
+				// 		ligErrorMessage.innerText = ""; // Lig hatası yoksa mesajı temizle
+				// 	}
+				// }
+
+
+
+
+			});
+
+		</script>
+	</div>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
